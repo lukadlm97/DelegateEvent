@@ -6,20 +6,26 @@ using System.Threading.Tasks;
 
 namespace DelegatesAndEvents
 {
-    public delegate void WorkPreformedHendler(int hours, WorkType workType);
 
     class Program
     {
         static void Main(string[] args)
         {
+            var worker = new Worker();
+            worker.WorkPerformed += new EventHandler<WorkPerformedEventArgs>(worker_WorkPerformed);
+            worker.WorkCompleted += new EventHandler(Worker_WorkCompleted);
+            worker.doWork(8, WorkType.GenerateReports);
+            Console.Read();
         }
-        static void WorkPreformed1(int hours,WorkType workType)
+
+        private static void Worker_WorkCompleted(object sender, EventArgs e)
         {
-            Console.WriteLine("WorkPreformed1 called!");
+            Console.WriteLine("Worker is Done!");
         }
-        static void WorkPreformed2(int hours, WorkType workType)
+
+        private static void worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
         {
-            Console.WriteLine("WorkPreformed2 called!");
+            Console.WriteLine(e.Hours + "  "+e.WorkType);
         }
     }
     public enum WorkType
