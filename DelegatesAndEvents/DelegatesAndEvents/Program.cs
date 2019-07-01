@@ -6,27 +6,24 @@ using System.Threading.Tasks;
 
 namespace DelegatesAndEvents
 {
-
+    public delegate int BizRulesDelegate(int x, int y);
     class Program
     {
+       
         static void Main(string[] args)
         {
-            var worker = new Worker();
-            worker.WorkPerformed += new EventHandler<WorkPerformedEventArgs>(worker_WorkPerformed);
-            worker.WorkCompleted += new EventHandler(Worker_WorkCompleted);
+          /*  var worker = new Worker();
+            worker.WorkPerformed += (s,e) => Console.WriteLine(e.Hours + "  " + e.WorkType);
+            worker.WorkCompleted += (s,e) => Console.WriteLine("Worker is Done!");
             worker.doWork(8, WorkType.GenerateReports);
-            Console.Read();
+            Console.Read();*/
+            BizRulesDelegate addDel = (x, y) => x + y;
+            ProcessData.Process(2, 5, addDel);
         }
 
-        private static void Worker_WorkCompleted(object sender, EventArgs e)
-        {
-            Console.WriteLine("Worker is Done!");
-        }
+        
 
-        private static void worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
-        {
-            Console.WriteLine(e.Hours + "  "+e.WorkType);
-        }
+       
     }
     public enum WorkType
     {
